@@ -38,9 +38,26 @@ module.exports = {
   ],
   resolve: {
     extensions: ['.js', '.json', '.jsx', '.ts', '.tsx'],
+    alias: {
+      component: path.resolve(__dirname, '../src/component'),
+    }
   },
   module: {
     rules: [
+      {
+        test: /\.less$/i,
+        use: [
+          {
+            loader: 'style-loader',
+          },
+          {
+            loader: 'css-loader',
+          },
+          {
+            loader: 'less-loader',
+          }
+        ]
+      },
       {
         test: /\.tsx?$/,
         use: 'ts-loader',
@@ -115,6 +132,20 @@ module.exports = {
           }
         ],
         exclude: /node_modules/,
+      },
+      {
+        test: /\.tsx?$|\.ts?$/,
+        exclude: /node_modules/,
+        use: [
+          'babel-loader',
+          {
+            loader: 'ts-loader',
+            options: {
+              transpileOnly: true,
+            },
+          },
+          'thread-loader',
+        ],
       },
     ],
   },
