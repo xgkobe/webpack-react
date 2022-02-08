@@ -4,6 +4,7 @@ const yaml = require("yamljs");
 const json5 = require("json5");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CompressionPlugin = require("compression-webpack-plugin");
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 
 console.log(process.env);
 
@@ -30,6 +31,12 @@ module.exports = {
       inject: false,
       template: path.resolve(__dirname, "../index.html"),
     }),
+    // new ForkTsCheckerWebpackPlugin({
+    //   eslint: {
+    //     files: './src/**/*.{ts,tsx,js,jsx}',
+    //     emitWarning: true,
+    //   },
+    // }),
     new CompressionPlugin({
       test: /\.js$|\.html$|\.css/, // 匹配文件名
       threshold: 10240, // 文件压缩阈值，对超过10k的进行压缩
@@ -44,80 +51,6 @@ module.exports = {
   },
   module: {
     rules: [
-      {
-        test: /\.less$/i,
-        use: [
-          {
-            loader: 'style-loader',
-          },
-          {
-            loader: 'css-loader',
-          },
-          {
-            loader: 'less-loader',
-          }
-        ]
-      },
-      {
-        test: /\.tsx?$/,
-        use: 'ts-loader',
-        exclude: /node_modules/,
-      },
-      {
-        test: /\.css$/,
-        use: [
-          {
-            loader: "style-loader",
-          },
-          {
-            loader: "css-loader",
-          },
-        ],
-      },
-      {
-        test: /\.(svg|otf|ttf|woff2?|eot|gif|png|jpe?g)(\?\S*)?$/,
-        use: [
-          {
-            loader: "url-loader",
-            options: {
-              limit: 8192000,
-            },
-          },
-        ],
-      },
-      {
-        test: /\.(woff|woff2|eot|ttf|otf)$/i,
-        type: "asset/resource",
-      },
-      {
-        test: /\.(csv|tsv)$/i,
-        use: ["csv-loader"],
-      },
-      {
-        test: /\.xml$/i,
-        use: ["xml-loader"],
-      },
-      {
-        test: /\.toml$/i,
-        type: "json",
-        parser: {
-          parse: toml.parse,
-        },
-      },
-      {
-        test: /\.yaml$/i,
-        type: "json",
-        parser: {
-          parse: yaml.parse,
-        },
-      },
-      {
-        test: /\.json5$/i,
-        type: "json",
-        parser: {
-          parse: json5.parse,
-        },
-      },
       {
         test: /\.(js|jsx)$/,
         use: [
@@ -137,7 +70,7 @@ module.exports = {
         test: /\.tsx?$|\.ts?$/,
         exclude: /node_modules/,
         use: [
-          'babel-loader',
+          'esbuild-loader',
           {
             loader: 'ts-loader',
             options: {
@@ -147,6 +80,81 @@ module.exports = {
           'thread-loader',
         ],
       },
+      {
+        test: /\.less$/i,
+        use: [
+          {
+            loader: 'style-loader',
+          },
+          {
+            loader: 'css-loader',
+          },
+          {
+            loader: 'less-loader',
+          }
+        ]
+      },
+      // {
+      //   test: /\.tsx?$|\.ts?$/,
+      //   use: 'ts-loader',
+      //   exclude: /node_modules/,
+      // },
+      {
+        test: /\.css$/,
+        use: [
+          {
+            loader: "style-loader",
+          },
+          {
+            loader: "css-loader",
+          },
+        ],
+      },
+      // {
+      //   test: /\.(svg|otf|ttf|woff2?|eot|gif|png|jpe?g)(\?\S*)?$/,
+      //   use: [
+      //     {
+      //       loader: "url-loader",
+      //       options: {
+      //         limit: 8192000,
+      //       },
+      //     },
+      //   ],
+      // },
+      // {
+      //   test: /\.(woff|woff2|eot|ttf|otf)$/i,
+      //   type: "asset/resource",
+      // },
+      // {
+      //   test: /\.(csv|tsv)$/i,
+      //   use: ["csv-loader"],
+      // },
+      // {
+      //   test: /\.xml$/i,
+      //   use: ["xml-loader"],
+      // },
+      // {
+      //   test: /\.toml$/i,
+      //   type: "json",
+      //   parser: {
+      //     parse: toml.parse,
+      //   },
+      // },
+      // {
+      //   test: /\.yaml$/i,
+      //   type: "json",
+      //   parser: {
+      //     parse: yaml.parse,
+      //   },
+      // },
+      // {
+      //   test: /\.json5$/i,
+      //   type: "json",
+      //   parser: {
+      //     parse: json5.parse,
+      //   },
+      // },
+      
     ],
   },
 };

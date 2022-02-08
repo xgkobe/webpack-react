@@ -1,13 +1,26 @@
 {
   "compilerOptions": {
-    "outDir": "./dist/",
     "sourceMap": true,
-    "noImplicitAny": true,
-    "module": "es6",
+    "module": "esnext",
     "target": "es5",
     "jsx": "react",
+    "strict": false,
+    "allowSyntheticDefaultImports": true,
     "allowJs": true,
     "moduleResolution": "node",
-    "allowSyntheticDefaultImports": true,
-  }
+    "baseUrl": "./src",
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "noImplicitReturns": false,
+    "removeComments": true,
+    "strictNullChecks": false,
+    "lib": ["es5", "es2015", "dom", "ESNext"]
+  },
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "src/globals.d.ts",
+    "node_modules/@types/**/*.d.ts", "src/utils/http.js",
+  ],
+  "exclude": ["**/node_modules/*", "**/*.spec.ts"]
 }
