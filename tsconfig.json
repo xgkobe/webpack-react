@@ -20,7 +20,7 @@
     "src/**/*.ts",
     "src/**/*.tsx",
     "src/globals.d.ts",
-    "node_modules/@types/**/*.d.ts", "src/utils/http.js",
+    "node_modules/@types/**/*.d.ts", "src/utils/http.ts",
   ],
   "exclude": ["**/node_modules/*", "**/*.spec.ts"]
 }

@@ -1,10 +1,8 @@
 const path = require("path");
-const toml = require("toml");
-const yaml = require("yamljs");
-const json5 = require("json5");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CompressionPlugin = require("compression-webpack-plugin");
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
+const { DefinePlugin } = require("webpack");
 
 console.log(process.env);
 
@@ -13,7 +11,7 @@ module.exports = {
     index: "./src/main.tsx",
   },
   output: {
-    filename: "[name].bundle.js",
+    filename: '[name].index.prod.js',
     path: path.resolve(__dirname, "../dist"),
     publicPath: "/",
     clean: true, // 打包构建前清除dist文件中无用的
@@ -25,12 +23,6 @@ module.exports = {
   },
   devtool: "inline-source-map",
   plugins: [
-    new HtmlWebpackPlugin({
-      title: "管理输出hh",
-      filename: "index.html",
-      inject: false,
-      template: path.resolve(__dirname, "../index.html"),
-    }),
     // new ForkTsCheckerWebpackPlugin({
     //   eslint: {
     //     files: './src/**/*.{ts,tsx,js,jsx}',
@@ -42,6 +34,15 @@ module.exports = {
       threshold: 10240, // 文件压缩阈值，对超过10k的进行压缩
       deleteOriginalAssets: false, // 是否删除源文件
     }),
+    new HtmlWebpackPlugin({
+      title: "管理输出hh",
+      filename: "index.html",
+      inject: false,
+      template: path.resolve(__dirname, "../index.html"),
+    }),
+    new DefinePlugin({
+      VERSION: JSON.stringify('5fa3b9'),
+    })
   ],
   resolve: {
     extensions: ['.js', '.json', '.jsx', '.ts', '.tsx'],
@@ -158,3 +159,4 @@ module.exports = {
     ],
   },
 };
+
