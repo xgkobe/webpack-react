@@ -1,17 +1,16 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const CompressionPlugin = require("compression-webpack-plugin");
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { DefinePlugin } = require("webpack");
-
-console.log(process.env);
+const webpack = require('webpack');
 
 module.exports = {
   entry: {
     index: "./src/main.tsx",
   },
   output: {
-    filename: '[name].index.prod.js',
+    filename: 'scripts/[name].index.prod.js',
     path: path.resolve(__dirname, "../dist"),
     publicPath: "/",
     clean: true, // 打包构建前清除dist文件中无用的
@@ -29,25 +28,28 @@ module.exports = {
     //     emitWarning: true,
     //   },
     // }),
-    new CompressionPlugin({
-      test: /\.js$|\.html$|\.css/, // 匹配文件名
-      threshold: 10240, // 文件压缩阈值，对超过10k的进行压缩
-      deleteOriginalAssets: false, // 是否删除源文件
+    new webpack.IgnorePlugin({
+      resourceRegExp: /^\.\/locale$/,
+      contextRegExp: /moment$/,
     }),
     new HtmlWebpackPlugin({
-      title: "管理输出hh",
       filename: "index.html",
-      inject: false,
+      inject: true,
       template: path.resolve(__dirname, "../index.html"),
     }),
     new DefinePlugin({
       VERSION: JSON.stringify('5fa3b9'),
-    })
+    }),
+    new MiniCssExtractPlugin({
+      filename: 'css/[name].[fullhash:5].css',
+      chunkFilename: 'css/[id].[fullhash:5].css',
+    }),
   ],
   resolve: {
     extensions: ['.js', '.json', '.jsx', '.ts', '.tsx'],
     alias: {
       component: path.resolve(__dirname, '../src/component'),
+      '@': path.resolve(__dirname, '../src'),
     }
   },
   module: {
@@ -67,6 +69,11 @@ module.exports = {
         ],
         exclude: /node_modules/,
       },
+       // {
+      //   test: /\.tsx?$|\.ts?$/,
+      //   use: 'ts-loader',
+      //   exclude: /node_modules/,
+      // },
       {
         test: /\.tsx?$|\.ts?$/,
         exclude: /node_modules/,
@@ -82,7 +89,7 @@ module.exports = {
         ],
       },
       {
-        test: /\.less$/i,
+        test: /\.(less|css)$/,
         use: [
           {
             loader: 'style-loader',
@@ -95,67 +102,18 @@ module.exports = {
           }
         ]
       },
-      // {
-      //   test: /\.tsx?$|\.ts?$/,
-      //   use: 'ts-loader',
-      //   exclude: /node_modules/,
-      // },
       {
-        test: /\.css$/,
-        use: [
-          {
-            loader: "style-loader",
-          },
-          {
-            loader: "css-loader",
-          },
-        ],
-      },
-      // {
-      //   test: /\.(svg|otf|ttf|woff2?|eot|gif|png|jpe?g)(\?\S*)?$/,
-      //   use: [
-      //     {
-      //       loader: "url-loader",
-      //       options: {
-      //         limit: 8192000,
-      //       },
-      //     },
-      //   ],
-      // },
-      // {
-      //   test: /\.(woff|woff2|eot|ttf|otf)$/i,
-      //   type: "asset/resource",
-      // },
-      // {
-      //   test: /\.(csv|tsv)$/i,
-      //   use: ["csv-loader"],
-      // },
-      // {
-      //   test: /\.xml$/i,
-      //   use: ["xml-loader"],
-      // },
-      // {
-      //   test: /\.toml$/i,
-      //   type: "json",
-      //   parser: {
-      //     parse: toml.parse,
-      //   },
-      // },
-      // {
-      //   test: /\.yaml$/i,
-      //   type: "json",
-      //   parser: {
-      //     parse: yaml.parse,
-      //   },
-      // },
-      // {
-      //   test: /\.json5$/i,
-      //   type: "json",
-      //   parser: {
-      //     parse: json5.parse,
-      //   },
-      // },
-      
+        test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
+        type: "asset",
+        parser: {
+          dataUrlCondition: {
+            maxSize: 4 * 1024 // 4kb 大于4kb 视为resource 模块类型
+          }
+        },
+        generator: {
+          filename: 'assets/[name].[hash:5].[ext]'
+        }
+      }
     ],
   },
 };

@@ -4,23 +4,28 @@
     "module": "esnext",
     "target": "es5",
     "jsx": "react",
-    "strict": false,
     "allowSyntheticDefaultImports": true,
     "allowJs": true,
     "moduleResolution": "node",
-    "baseUrl": "./src",
+    "baseUrl": ".",
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "noImplicitReturns": false,
     "removeComments": true,
     "strictNullChecks": false,
-    "lib": ["es5", "es2015", "dom", "ESNext"]
+    "lib": ["es5", "es2015", "dom", "ESNext"],
+    "paths": {
+      "@/*": [
+        "src/*"
+      ]
+    }
   },
   "include": [
     "src/**/*.ts",
     "src/**/*.tsx",
     "src/globals.d.ts",
-    "node_modules/@types/**/*.d.ts", "src/utils/http.ts",
+    "node_modules/@types/**/*.d.ts",
+    "typings.d.ts"
   ],
   "exclude": ["**/node_modules/*", "**/*.spec.ts"]
 }

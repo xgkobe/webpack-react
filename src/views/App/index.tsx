@@ -1,46 +1,48 @@
 import React, { useEffect } from 'react';
 import '../../utils/http';
 import {Button} from 'antd';
+import { connect } from 'react-redux';
+import { ConnectProps } from '@/typings/interface';
+interface STORE {
+  count: number
+}
 
-// export default () => {
+const getStore = (store: STORE) => {
+  console.log(store);
+  return store;
+}
 
-//   useEffect(() => {
+const actions =  {
+    onClick: (payload) => (dispatch) => {
+      dispatch({
+        type: 'UPDATE',
+        payload,
+      })
+    }
+}
 
-//   },[])
+type IProps = ConnectProps<typeof getStore, typeof actions>
+class App extends React.Component<IProps>{
+  constructor(props) {
+    super(props);
+    props
 
-//   return (
-//     <div></div>
-//   )
-// };
-const ThemeContext = React.createContext('light');
-export default class App extends React.Component {
+  }
+  state = {
+    theme: 'red',
+    tag: ''
+  }
   render() {
-    // 使用一个 Provider 来将当前的 theme 传递给以下的组件树。
-    // 无论多深，任何组件都能读取这个值。
-    // 在这个例子中，我们将 “dark” 作为当前的值传递下去。
+    const {count} = this.props;
+    
     return (
-      <ThemeContext.Provider value="dark">
-        <Toolbar />
-      </ThemeContext.Provider>
+      <div>
+        <Button onClick={() => this.props.onClick({count: 0}) }>{count}</Button>
+      </div>
     );
   }
 }
 
-// 中间的组件再也不必指明往下传递 theme 了。
-function Toolbar() {
-  return (
-    <div>
-      <ThemedButton />
-    </div>
-  );
-}
+export default connect(getStore, actions)(App);
 
-class ThemedButton extends React.Component {
-  // 指定 contextType 读取当前的 theme context。
-  // React 会往上找到最近的 theme Provider，然后使用它的值。
-  // 在这个例子中，当前的 theme 值为 “dark”。
-  static contextType = ThemeContext;
-  render() {
-    return <Button > {this.context}</Button>;
-  }
-}
+

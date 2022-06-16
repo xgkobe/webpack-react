@@ -2,16 +2,10 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <title><%= htmlWebpackPlugin.options.title %></title>
+    <title>better</title>
+    <link rel="icon" href="https://img.alicdn.com/imgextra/i2/O1CN01ZyAlrn1MwaMhqz36G_!!6000000001499-73-tps-64-64.ico">
   </head>
   <body>
-    <div id="root">
-    </div>
-    <!-- <script src="./src/index.js"></script> -->
+    <div id="root"></div>
   </body>
 </html>
-
-<!-- <script src="./js/dll.vendor.js"></script> -->
-<% for (var js in htmlWebpackPlugin.files.js) { %>
-  <script src="<%= htmlWebpackPlugin.files.js[js] %>" charset="utf-8"></script>
-<% } %>
