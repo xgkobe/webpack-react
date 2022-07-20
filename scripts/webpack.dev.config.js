@@ -8,5 +8,11 @@ module.exports = {
     hot: true,
     historyApiFallback: true,
     proxy: {},
+    client: {
+      overlay: {
+        errors: false,
+        warnings: false,
+      },
+    },
   },
 }

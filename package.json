@@ -70,6 +70,7 @@
   },
   "dependencies": {
     "@ant-design/compatible": "^1.0.8",
+    "@didi/monitor-sup": "0.0.8",
     "antd": "^4.16.13",
     "axios": "^0.25.0",
     "axios-jsonp": "^1.0.4",

@@ -26,6 +26,6 @@
     "src/globals.d.ts",
     "node_modules/@types/**/*.d.ts",
     "typings.d.ts"
-  ],
+, "src/pages/home/index.jsx"  ],
   "exclude": ["**/node_modules/*", "**/*.spec.ts"]
 }
