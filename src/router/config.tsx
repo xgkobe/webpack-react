@@ -6,7 +6,7 @@ export const routerConfig = [
   {
     component: lazy(() => import("@/pages/home")),
     // component: Home,
-    path: '/home',
+    path: '/',
   },
   {
     component: lazy(() => import("@/views/App")),

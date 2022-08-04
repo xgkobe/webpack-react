@@ -7,15 +7,12 @@ import Layout from '@/layout';
 
 export default (
   <ErrorBoundary>
-    {/* <HashRouter>{renderRoutes(routes as RouteConfig[])}</HashRouter> */}
-    <Layout>
-      {/* <BrowserRouter> */}
+    {/* <Layout> */}
       <HashRouter>
         <Suspense fallback={<>loading</>}>
         {renderRoutes(routes as RouteConfig[])}
         </Suspense>
         </HashRouter>
-      {/* </BrowserRouter> */}
-    </Layout>
+    {/* </Layout> */}
   </ErrorBoundary>
 );

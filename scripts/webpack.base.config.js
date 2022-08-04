@@ -9,9 +9,10 @@ module.exports = {
   entry: {
     index: "./src/main.tsx",
   },
+  target: "electron-renderer",
   output: {
     filename: 'scripts/[name].index.prod.js',
-    path: path.resolve(__dirname, "../dist"),
+    path: path.resolve(__dirname, "../../../dist"),
     publicPath: "/",
     clean: true, // 打包构建前清除dist文件中无用的
   },
